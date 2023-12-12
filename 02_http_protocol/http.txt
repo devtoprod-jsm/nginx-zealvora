@@ -1,0 +1,63 @@
+HTTP Protocol:
+Is the way a web client and webserver communicate.
+HTTP REquest Contains -
+<header fields>
+:
+<message body>
+:
+
+HTTP Request Methods:
+
+GET:
+1. Regular GET Request
+Used to fetch information mentioned in the request URI.
+ex:
+syntax: GET RequestURI Protocol/version
+.....
+GET /admin HTTP/1.1
+host vivnik.com
+$curl vivnik.com/admin
+2. Partial GET Request
+ex:
+GET /admin HTTP/1.1
+host vivnik.com
+IF-Modified-Since: Tue, 12 Dec 2023 02:43:31 GMT
+$curl -I --header "If-Modified-Since: Tue, 12 Dec 2023 02:43:31 GMT" vivnik.com/admin
+3. Partial GET Request
+GET /admin HTTP/1.1
+host vivnik.com
+Range: bytes=0-24
+$curl --header "Range: bytes=12-24" vivnik.com/admin
+
+POST:
+Used to send some data to the server to be processed in some way.
+ex:
+syntax RequestURI Protocol/version
+POST /login.php HTTP/1.1
+host: vivnik.com
+
+HEAD:
+Is similar to GET except that the server will only return the header fields (metadata) and exclude message body.
+Used to get information about a file without actually getting back the file
+ex:
+$curl -I vivnik.com
+
+TRACE:
+Is generally used for debugging purposes, i.e like verifying the content it sent to the server, the request received by server.
+To verify what is added along the way by the proxy or caching servers.
+Note: By default not allowed by nginx webserver due to security issues.
+ex:
+$curl -X "TRACE" --proxy 127.0.0.1:8080 vivnik.com
+
+OPTIONS:
+To find out which methods are allowed for a file on webserver. Disabled by default on nginx for security reasons.
+Allowing only certain methods on a file helps improve security. Can be done in webserver configuration file.
+ex:
+curl -X "OPTIONS" vivnik.com/admin -i
+
+HTTP STATUS CODES:
+100-199 - Informational status codes.
+200-299 - Success status codes.
+300-399 - Redirection status codes.
+400-499 - Client error status codes.
+500-599 - Server error status codes.
